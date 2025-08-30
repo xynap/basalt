@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Godot Engine
+Path=/usr/share/godot
+Exec=/usr/share/godot/godot %f
+Icon=/usr/share/godot/icon.svg
+MimeType=application/x-godot-project;
+Categories=Development;IDE;
