@@ -12,7 +12,7 @@ dnf5 config-manager addrepo --id=vscode --set=baseurl=https://packages.microsoft
 dnf5 -y install --enable-repo=vscode --nogpgcheck code
 
 # Install Godot
-GODOT_VERSION="4.5"
+GODOT_VERSION="4.5.1"
 pushd "$(mktemp -d)"
 mkdir -p /usr/share/godot
 curl -LO https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/Godot_v$GODOT_VERSION-stable_mono_linux_x86_64.zip
@@ -28,4 +28,4 @@ cp -af /ctx/system_files/. /
 
 # Clean up
 dnf5 clean all
-rm -rf /tmp/* /var/lib/dnf
+rm -rf /var/lib/dnf
