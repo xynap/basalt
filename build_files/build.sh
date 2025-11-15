@@ -2,7 +2,7 @@
 set -ouex pipefail
 
 # Install utilities
-dnf5 -y install dotnet-sdk-9.0 podman-compose
+dnf5 -y install dotnet-sdk-10.0 podman-compose
 
 # Install Ghostty
 dnf5 -y install --enable-repo=terra ghostty
