@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ouex pipefail
 
-# Install DotNet
-dnf5 -y install dotnet-sdk-9.0
+# Install .NET SDK
+dnf5 -y install dotnet-sdk-10.0
 
 # Install Ghostty
 dnf5 -y install --enable-repo=terra ghostty
