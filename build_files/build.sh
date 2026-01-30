@@ -4,15 +4,12 @@ set -ouex pipefail
 # Install utilities
 dnf5 -y install dotnet-sdk-10.0 podman-compose
 
-# Install Ghostty
-dnf5 -y install --enable-repo=terra ghostty
-
 # Install VS Code
 dnf5 config-manager addrepo --id=vscode --set=baseurl=https://packages.microsoft.com/yumrepos/vscode --set=enabled=0
 dnf5 -y install --enable-repo=vscode --nogpgcheck code
 
 # Install Godot
-GODOT_VERSION="4.5.1"
+GODOT_VERSION="4.6"
 pushd "$(mktemp -d)"
 mkdir -p /usr/share/godot
 curl -LO https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/Godot_v$GODOT_VERSION-stable_mono_linux_x86_64.zip
