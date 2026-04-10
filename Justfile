@@ -88,6 +88,9 @@ sudoif command *args:
 # Build the image using the specified parameters
 build $target_image=image_name $tag=default_tag:
     #!/usr/bin/env bash
+    podman() {
+        command -v podman >/dev/null 2>&1 && podman "$@" || docker "$@"
+    }
 
     BUILD_ARGS=()
     if [[ -z "$(git status -s)" ]]; then
@@ -96,7 +99,7 @@ build $target_image=image_name $tag=default_tag:
 
     podman build \
         "${BUILD_ARGS[@]}" \
-        --pull=newer \
+        --pull \
         --tag "${target_image}:${tag}" \
         .
 
@@ -120,6 +123,9 @@ build $target_image=image_name $tag=default_tag:
 _rootful_load_image $target_image=image_name $tag=default_tag:
     #!/usr/bin/bash
     set -eoux pipefail
+    podman() {
+        command -v podman >/dev/null 2>&1 && podman "$@" || docker "$@"
+    }
 
     # Check if already running as root or under sudo
     if [[ -n "${SUDO_USER:-}" || "${UID}" -eq "0" ]]; then
@@ -161,6 +167,9 @@ _rootful_load_image $target_image=image_name $tag=default_tag:
 _build-bib $target_image $tag $type $config: (_rootful_load_image target_image tag)
     #!/usr/bin/env bash
     set -euo pipefail
+    podman() {
+        command -v podman >/dev/null 2>&1 && podman "$@" || docker "$@"
+    }
 
     args="--type ${type} "
     args+="--use-librepo=True "
@@ -172,7 +181,7 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
       --rm \
       -it \
       --privileged \
-      --pull=newer \
+      --pull \
       --net=host \
       --security-opt label=type:unconfined_t \
       -v $(pwd)/${config}:/config.toml:ro \
@@ -225,6 +234,9 @@ rebuild-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_reb
 _run-vm $target_image $tag $type $config:
     #!/usr/bin/bash
     set -eoux pipefail
+    podman() {
+        command -v podman >/dev/null 2>&1 && podman "$@" || docker "$@"
+    }
 
     # Determine the image file based on the type
     image_file="output/${type}/disk.${type}"
@@ -248,7 +260,7 @@ _run-vm $target_image $tag $type $config:
     # Set up the arguments for running the VM
     run_args=()
     run_args+=(--rm --privileged)
-    run_args+=(--pull=newer)
+    run_args+=(--pull)
     run_args+=(--publish "127.0.0.1:${port}:8006")
     run_args+=(--env "CPU_CORES=4")
     run_args+=(--env "RAM_SIZE=8G")
