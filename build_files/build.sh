@@ -4,6 +4,30 @@ set -ouex pipefail
 # Install utilities
 dnf5 -y install dotnet-sdk-10.0 podman-compose
 
+# Install Hyprland
+dnf5 -y install \
+  cliphist \
+  kitty \
+  qutebrowser \
+  swaync \
+  waybar
+dnf5 -y copr enable lihaohong/yazi
+dnf5 -y install yazi
+dnf5 -y copr disable lihaohong/yazi
+dnf5 -y copr enable sdegler/hyprland
+dnf5 -y install \
+  hyprland \
+  hyprland-guiutils \
+  hypridle \
+  hyprlauncher \
+  hyprlock \
+  hyprpaper \
+  hyprpicker \
+  hyprpolkitagent \
+  hyprsunset \
+  xdg-desktop-portal-hyprland
+dnf5 -y copr disable sdegler/hyprland
+
 # Install VS Code
 dnf5 config-manager addrepo --id=vscode --set=baseurl=https://packages.microsoft.com/yumrepos/vscode --set=enabled=0
 dnf5 -y install --enable-repo=vscode --nogpgcheck code
@@ -25,4 +49,4 @@ cp -af /ctx/system_files/. /
 
 # Clean up
 dnf5 clean all
-rm -rf /var/lib/dnf
+rm -rf /run/dnf /var/lib/dnf
