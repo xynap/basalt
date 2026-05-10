@@ -2,7 +2,14 @@
 set -ouex pipefail
 
 # Install utilities
-dnf5 -y install dotnet-sdk-10.0 podman-compose
+dnf5 -y install \
+  dotnet-sdk-10.0 \
+  podman-compose \
+  libvirt \
+  qemu \
+  qemu-img \
+  qemu-kvm \
+  virt-install
 
 # Install Hyprland
 dnf5 -y install \
