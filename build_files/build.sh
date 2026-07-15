@@ -9,36 +9,12 @@ dnf5 -y install \
   libvirt-daemon-kvm \
   virt-install
 
-# Install Hyprland
-dnf5 -y install \
-  cliphist \
-  kitty \
-  qutebrowser \
-  swaync \
-  waybar
-dnf5 -y copr enable lihaohong/yazi
-dnf5 -y install yazi
-dnf5 -y copr disable lihaohong/yazi
-dnf5 -y copr enable sdegler/hyprland
-dnf5 -y install \
-  hyprland \
-  hyprland-guiutils \
-  hypridle \
-  hyprlauncher \
-  hyprlock \
-  hyprpaper \
-  hyprpicker \
-  hyprpolkitagent \
-  hyprsunset \
-  xdg-desktop-portal-hyprland
-dnf5 -y copr disable sdegler/hyprland
-
 # Install VS Code
 dnf5 config-manager addrepo --id=vscode --set=baseurl=https://packages.microsoft.com/yumrepos/vscode --set=enabled=0
 dnf5 -y install --enable-repo=vscode --nogpgcheck code
 
 # Install Godot
-GODOT_VERSION="4.7"
+GODOT_VERSION="4.7.1"
 pushd "$(mktemp -d)"
 mkdir -p /usr/share/godot
 curl -LO https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/Godot_v$GODOT_VERSION-stable_mono_linux_x86_64.zip
